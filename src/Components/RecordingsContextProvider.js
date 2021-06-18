@@ -1,16 +1,22 @@
 import React, {createContext, useState} from 'react';
+import {formatDate} from "../utils/Date";
 
 export const RecordingContext = createContext()
 
 function RecordingsContextProvider(props) {
 
-    const [recordings, setRecordings] = useState([]);
+    const URL_BASE = "http://localhost:8080"
+
+    const [recordings, setRecordings] = useState({});
     const [loading, setLoading] = useState(true);
 
     // Get weights from API
-    const search = () => {
-        console.log("Searching for weights...")
-        const apiUrl = `http://localhost:8080/recordings/`;
+    const search = (startDate) => {
+        const to = new Date(startDate)
+        to.setDate(startDate.getDate() + 7)
+
+        console.log(`Searching for recordings between ${startDate} and ${to}...`)
+        const apiUrl = `${URL_BASE}/recordings/between?from=${formatDate(startDate)}&to=${formatDate(to)}`;
         fetch(apiUrl)
             .then((res) => res.json())
             .then((results) => {
