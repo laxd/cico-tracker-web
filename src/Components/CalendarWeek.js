@@ -18,6 +18,12 @@ const getDaysOfWeek = (startDate) => {
     return array
 }
 
+const isToday = (date) => {
+    var today = formatDate(new Date())
+
+    return today === date
+}
+
 function CalendarWeek(props) {
     return (
         <table>
@@ -30,7 +36,7 @@ function CalendarWeek(props) {
             </thead>
             <tbody>
             {getDaysOfWeek(props.startDate).map((date) => {
-                return <tr key={date}>
+                return <tr className={isToday(date) ? "today" : ""} key={date}>
                     <td>{date}</td>
                     <td>{props.recordings[date] == null ? "" : props.recordings[date].weight}</td>
                     <td>{props.recordings[date] == null ? "" : props.recordings[date].calories}</td>
