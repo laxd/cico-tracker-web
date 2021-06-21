@@ -1,30 +1,29 @@
 import React from 'react';
 import {formatDate} from "../utils/Date";
+import PropTypes from "prop-types";
 
 const getDaysOfWeek = (startDate) => {
-    console.log(`Creating days of week from ${startDate}`)
     const array = []
 
     for(const day of [0,1,2,3,4,5,6]) {
         const date = new Date(startDate)
-        console.log(date)
         date.setDate(date.getDate() + day)
-        console.log(date)
         array.push(formatDate(date))
     }
-
-    console.log(array)
 
     return array
 }
 
 const isToday = (date) => {
-    var today = formatDate(new Date())
-
-    return today === date
+    return formatDate(new Date()) === date
 }
 
 function CalendarWeek(props) {
+
+    const find = (date) => {
+        return props.recordings.find(r => r.date === date)
+    }
+
     return (
         <table>
             <thead>
@@ -36,15 +35,28 @@ function CalendarWeek(props) {
             </thead>
             <tbody>
             {getDaysOfWeek(props.startDate).map((date) => {
+                var recording = find(date)
+
+                if(recording == null) {
+                    recording = {
+                        "date": date
+                    }
+                }
+
                 return <tr className={isToday(date) ? "today" : ""} key={date}>
-                    <td>{date}</td>
-                    <td>{props.recordings[date] == null ? "" : props.recordings[date].weight}</td>
-                    <td>{props.recordings[date] == null ? "" : props.recordings[date].calories}</td>
+                    <td>{recording.date}</td>
+                    <td>{recording.weight}</td>
+                    <td>{recording.calories}</td>
                 </tr>}
             )}
             </tbody>
         </table>
     );
+}
+
+CalendarWeek.propTypes = {
+    startDate: PropTypes.instanceOf(Date),
+    recordings: PropTypes.array
 }
 
 export default CalendarWeek;

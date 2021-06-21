@@ -3,6 +3,7 @@ import {RecordingContext} from "./RecordingsContextProvider";
 import CalendarWeek from "./CalendarWeek";
 import Loading from "./Loading";
 import DateRangeSelect from "./DateRangeSelect";
+import CalendarStatistics from "./CalendarStatistics";
 
 function getMonday() {
     const prevMonday = new Date();
@@ -18,10 +19,7 @@ function CalendarDisplay(props) {
     const [startDate, setStartDate] = useState(getMonday())
 
     useEffect(() => {
-        // TODO: Use range
-        console.log("CalendarDisplay searching...")
         search(startDate);
-        console.log("DONE")
     }, [startDate]);
 
     const addDays = (offset) => {
@@ -30,11 +28,15 @@ function CalendarDisplay(props) {
         setStartDate(newDate)
     }
 
-    // TODO: Change to calendar display
+    if(loading) {
+        return <Loading/>
+    }
+
     return (
         <div>
-            {loading ? <Loading /> : <CalendarWeek recordings={recordings} startDate={startDate} /> }
+            <CalendarWeek recordings={recordings} startDate={startDate} />
             <DateRangeSelect startDate={startDate} addDays={addDays}/>
+            <CalendarStatistics recordings={recordings}/>
         </div>
     );
 }
