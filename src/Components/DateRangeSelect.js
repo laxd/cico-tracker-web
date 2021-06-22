@@ -1,10 +1,10 @@
 import React from 'react';
 
-function DateRangeSelect(props) {
+function DateRangeSelect({ addDays }) {
     return (
         <div>
-            <button onClick={() => props.addDays(-7)}>Previous week</button>
-            <button onClick={() => props.addDays(7)}>Next week</button>
+            <button onClick={() => addDays(-7)}>Previous week</button>
+            <button onClick={() => addDays(7)}>Next week</button>
         </div>
     );
 }

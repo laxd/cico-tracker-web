@@ -1,6 +1,7 @@
 import React from 'react';
 import {formatDate} from "../utils/Date";
 import PropTypes from "prop-types";
+import Range from "../utils/Range";
 
 const getDaysOfWeek = (startDate) => {
     const array = []
@@ -34,17 +35,15 @@ function CalendarWeek(props) {
             </tr>
             </thead>
             <tbody>
-            {getDaysOfWeek(props.startDate).map((date) => {
+            {getDaysOfWeek(props.range.from).map((date) => {
                 var recording = find(date)
 
                 if(recording == null) {
-                    recording = {
-                        "date": date
-                    }
+                    recording = {}
                 }
 
                 return <tr className={isToday(date) ? "today" : ""} key={date}>
-                    <td>{recording.date}</td>
+                    <td>{date}</td>
                     <td>{recording.weight}</td>
                     <td>{recording.calories}</td>
                 </tr>}
@@ -55,7 +54,7 @@ function CalendarWeek(props) {
 }
 
 CalendarWeek.propTypes = {
-    startDate: PropTypes.instanceOf(Date),
+    range: PropTypes.instanceOf(Range),
     recordings: PropTypes.array
 }
 

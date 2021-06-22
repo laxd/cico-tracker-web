@@ -32,6 +32,29 @@
   color: orange;
 }
 
+.stats-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.stats-weight, .stats-calories {
+  display: flex;
+  flex-direction: row;
+}
+
+.average, .change {
+  padding: 3px;
+}
+
+.change-positive {
+  color: green;
+}
+
+.change-negative {
+  color: red
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
